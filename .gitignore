@@ -1,0 +1,25 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+.static/
+.next/
+build/
+
+# Environment
+.env
+.env.*
+
+# Vendure static output
+/static/email/test-emails/
+/static/assets/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs
+.vscode/
+.idea/
