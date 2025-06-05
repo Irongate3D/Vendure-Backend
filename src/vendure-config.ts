@@ -80,6 +80,7 @@ export const config: VendureConfig = {
       route: 'admin',
       port: serverPort,
       adminUiConfig: {
+        apiHost: '0.0.0.0',
         apiPort: serverPort,
       },
     }),
