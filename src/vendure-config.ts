@@ -56,7 +56,7 @@ export const config: VendureConfig = {
     AssetServerPlugin.init({
       route: 'assets',
       assetUploadDir: path.join(__dirname, '../static/assets'),
-      assetUrlPrefix: IS_DEV ? undefined : 'https://www.my-shop.com/assets/',
+      assetUrlPrefix: IS_DEV ? undefined : process.env.ASSET_URL,
     }),
     DefaultSchedulerPlugin.init(),
     DefaultJobQueuePlugin.init({ useDatabaseForBuffer: true }),
