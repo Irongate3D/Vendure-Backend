@@ -23,11 +23,11 @@
     "@vendure/payments-plugin": "^3.3.2",
     "dotenv": "16.5.0",
     "pg": "8.16.0",
-    "stripe": "^13.11.0"
+    "stripe": "^13.11.0",
+    "concurrently": "^9.1.2"
   },
   "devDependencies": {
     "@vendure/cli": "3.3.2",
-    "concurrently": "^9.1.2",
     "typescript": "5.8.2"
   }
 }
