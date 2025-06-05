@@ -1,148 +1,82 @@
-# wadestown-backend
+# 📺 Vendure Backend
 
-This project was generated with [`@vendure/create`](https://github.com/vendure-ecommerce/vendure/tree/master/packages/create).
+A modern headless ecommerce backend built with [Vendure](https://www.vendure.io/), using PostgreSQL, Stripe payments, and email notifications.
 
-Useful links:
+---
 
-- [Vendure docs](https://www.vendure.io/docs)
-- [Vendure Discord community](https://www.vendure.io/community)
-- [Vendure on GitHub](https://github.com/vendure-ecommerce/vendure)
-- [Vendure plugin template](https://github.com/vendure-ecommerce/plugin-template)
+## ⚙️ Setup
 
-## Directory structure
+### 1. Clone the repository
 
-* `/src` contains the source code of your Vendure server. All your custom code and plugins should reside here.
-* `/static` contains static (non-code) files such as assets (e.g. uploaded images) and email templates.
-
-## Development
-
+```bash
+git clone https://github.com/Irongate3D/Vendure-Backend.git
+cd Vendure-Backend
 ```
+
+### 2. Create your environment config
+
+Copy the `.env.example` file and add your secrets (e.g., DB password, Stripe keys).
+
+```bash
+cp .env.example .env
+```
+
+### 3. Start PostgreSQL via Docker
+
+```bash
+docker-compose up -d
+```
+
+### 4. Install dependencies and run the development server
+
+```bash
+npm install
 npm run dev
 ```
 
-will start the Vendure server and [worker](https://www.vendure.io/docs/developer-guide/vendure-worker/) processes from
-the `src` directory.
+This will start the Vendure server and worker processes.
 
-## Build
-
-```
-npm run build
-```
-
-will compile the TypeScript sources into the `/dist` directory.
-
-## Production
-
-For production, there are many possibilities which depend on your operational requirements as well as your production
-hosting environment.
-
-### Running directly
-
-You can run the built files directly with the `start` script:
-
-```
-npm run start
-```
-
-You could also consider using a process manager like [pm2](https://pm2.keymetrics.io/) to run and manage
-the server & worker processes.
-
-### Using Docker
-
-We've included a sample [Dockerfile](./Dockerfile) which you can build with the following command:
-
-```
-docker build -t vendure .
-```
-
-This builds an image and tags it with the name "vendure". We can then run it with:
-
-```
-# Run the server
-docker run -dp 3000:3000 -e "DB_HOST=host.docker.internal" --name vendure-server vendure npm run start:server
-
-# Run the worker
-docker run -dp 3000:3000 -e "DB_HOST=host.docker.internal" --name vendure-worker vendure npm run start:worker
-```
-
-Here is a breakdown of the command used above:
-
-- `docker run` - run the image we created with `docker build`
-- `-dp 3000:3000` - the `-d` flag means to run in "detached" mode, so it runs in the background and does not take
-control of your terminal. `-p 3000:3000` means to expose port 3000 of the container (which is what Vendure listens
-on by default) as port 3000 on your host machine.
-- `-e "DB_HOST=host.docker.internal"` - the `-e` option allows you to define environment variables. In this case we
-are setting the `DB_HOST` to point to a special DNS name that is created by Docker desktop which points to the IP of
-the host machine. Note that `host.docker.internal` only exists in a Docker Desktop environment and thus should only be
-used in development.
-- `--name vendure-server` - we give the container a human-readable name.
-- `vendure` - we are referencing the tag we set up during the build.
-- `npm run start:server` - this last part is the actual command that should be run inside the container.
-
-### Docker Compose
-
-We've included a [docker-compose.yml](./docker-compose.yml) file which includes configuration for commonly-used
-services such as PostgreSQL, MySQL, MariaDB, Elasticsearch and Redis.
-
-To use Docker Compose, you will need to have Docker installed on your machine. Here are installation
-instructions for [Mac](https://docs.docker.com/desktop/install/mac-install/), [Windows](https://docs.docker.com/desktop/install/windows-install/),
-and [Linux](https://docs.docker.com/desktop/install/linux/).
-
-You can start the services with:
-
-```shell
-docker-compose up <service>
-
-# examples:
-docker-compose up postgres_db
-docker-compose up redis
-```
-
-## Plugins
-
-In Vendure, your custom functionality will live in [plugins](https://www.vendure.io/docs/plugins/).
-These should be located in the `./src/plugins` directory.
-
-To create a new plugin run:
-
-```
-npx vendure add
-```
-
-and select `[Plugin] Create a new Vendure plugin`.
-
-## Migrations
-
-[Migrations](https://www.vendure.io/docs/developer-guide/migrations/) allow safe updates to the database schema. Migrations
-will be required whenever you make changes to the `customFields` config or define new entities in a plugin.
-
-To generate a new migration, run:
-
-```
-npx vendure migrate
-```
-
-The generated migration file will be found in the `./src/migrations/` directory, and should be committed to source control.
-Next time you start the server, and outstanding migrations found in that directory will be run by the `runMigrations()`
-function in the [index.ts file](./src/index.ts).
-
-If, during initial development, you do not wish to manually generate a migration on each change to customFields etc, you
-can set `dbConnectionOptions.synchronize` to `true`. This will cause the database schema to get automatically updated
-on each start, removing the need for migration files. Note that this is **not** recommended once you have production
-data that you cannot lose.
+* Admin UI: [http://localhost:3000/admin](http://localhost:3000/admin)
+* Shop API: [http://localhost:3000/shop-api](http://localhost:3000/shop-api)
+* Admin API: [http://localhost:3000/admin-api](http://localhost:3000/admin-api)
+* Dev Mailbox: [http://localhost:3000/mailbox](http://localhost:3000/mailbox)
 
 ---
 
-You can also run any pending migrations manually, without starting the server via the "vendure migrate" command.
+## 🧪 Test Payments (Dummy)
+
+By default, the system is configured to use the `dummyPaymentHandler` for safe local testing.
+
+You can later switch to Stripe by updating your payment config and environment variables.
 
 ---
 
-## Troubleshooting
+## 🧵 Seeding Sample Data (coming soon)
 
-### Error: Could not load the "sharp" module using the \[OS\]-x\[Architecture\] runtime when running Vendure server.
+We’ll add a script for:
 
-- Make sure your Node version is ^18.17.0 || ^20.3.0 || >=21.0.0 to support the Sharp library.
-- Make sure your package manager is up to date.
-- **Not recommended**: if none of the above helps to resolve the issue, install sharp specifying your machines OS and Architecture. For example: `pnpm install sharp --config.platform=linux --config.architecture=x64` or `npm install sharp --os linux --cpu x64`
+* Creating sample products
+* Populating collections
+* Testing Stripe flows
 
-"# Vendure-Backend" 
+---
+
+## 🧠 Notes
+
+* **Do not commit your real `.env` file.** It is excluded by `.gitignore`.
+* Be sure to replace all placeholder values (e.g. `noreply@example.com`) with real values when going to production.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feat/thing`)
+3. Commit your changes
+4. Push and open a PR
+
+---
+
+## 📄 License
+
+MIT

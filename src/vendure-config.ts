@@ -40,7 +40,7 @@ export const config: VendureConfig = {
   },
   dbConnectionOptions: {
     type: 'postgres',
-    synchronize: true,
+    synchronize: false,
     migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
     logging: false,
     database: process.env.DB_NAME,
@@ -65,7 +65,7 @@ export const config: VendureConfig = {
     }),
     DefaultSchedulerPlugin.init(),
     DefaultJobQueuePlugin.init({ useDatabaseForBuffer: true }),
-    DefaultSearchPlugin.init({ bufferUpdates: false, indexStockStatus: true }),
+    DefaultSearchPlugin.init({ bufferUpdates: true, indexStockStatus: true }),
     EmailPlugin.init({
       devMode: true,
       outputPath: path.join(__dirname, '../static/email/test-emails'),
@@ -90,6 +90,6 @@ export const config: VendureConfig = {
     }),
     StripePlugin.init({
       storeCustomersInStripe: true,
-    }), // ✅ Correct usage
+    }),
   ],
 };

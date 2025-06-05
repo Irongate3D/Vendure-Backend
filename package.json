@@ -9,12 +9,14 @@
     "build": "tsc",
     "start:server": "node ./dist/index.js",
     "start:worker": "node ./dist/index-worker.js",
-    "start": "concurrently npm:start:*"
+    "start": "concurrently npm:start:*",
+    "prestart": "npm run build"
   },
   "dependencies": {
-    "@vendure/admin-ui-plugin": "3.3.2",
-    "@vendure/asset-server-plugin": "3.3.2",
-    "@vendure/core": "3.3.2",
+    "@pinelab/vendure-plugin-better-search": "^0.2.0",
+    "@vendure/admin-ui-plugin": "^3.3.2",
+    "@vendure/asset-server-plugin": "^3.3.2",
+    "@vendure/core": "^3.3.2",
     "@vendure/email-plugin": "^3.3.2",
     "@vendure/graphiql-plugin": "3.3.2",
     "@vendure/job-queue-plugin": "^3.3.2",
