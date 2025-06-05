@@ -7,6 +7,7 @@
     "dev:worker": "ts-node ./src/index-worker.ts",
     "dev": "concurrently npm:dev:*",
     "build": "tsc",
+    "migration:run": "ts-node node_modules/typeorm/cli.js migration:run -d ./src/data-source.ts",
     "start:server": "node ./dist/index.js",
     "start:worker": "node ./dist/index-worker.js",
     "start": "concurrently npm:start:*",
@@ -21,10 +22,10 @@
     "@vendure/graphiql-plugin": "3.3.2",
     "@vendure/job-queue-plugin": "^3.3.2",
     "@vendure/payments-plugin": "^3.3.2",
+    "concurrently": "^9.1.2",
     "dotenv": "16.5.0",
-    "pg": "8.16.0",
-    "stripe": "^13.11.0",
-    "concurrently": "^9.1.2"
+    "pg": "^8.16.0",
+    "stripe": "^13.11.0"
   },
   "devDependencies": {
     "@vendure/cli": "3.3.2",
