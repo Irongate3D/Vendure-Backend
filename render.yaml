@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: vendure-server
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:server
+    envVars:
+      - fromDotEnv: true
+    autoDeploy: true
+
+  - type: worker
+    name: vendure-worker
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:worker
+    envVars:
+      - fromDotEnv: true
+    autoDeploy: true
