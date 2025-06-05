@@ -40,15 +40,10 @@ export const config: VendureConfig = {
   },
   dbConnectionOptions: {
     type: 'postgres',
+    url: process.env.DATABASE_URL,
     synchronize: false,
     migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
     logging: false,
-    database: process.env.DB_NAME,
-    schema: process.env.DB_SCHEMA,
-    host: process.env.DB_HOST,
-    port: +process.env.DB_PORT,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
   },
   paymentOptions: {
     paymentMethodHandlers: [
@@ -83,7 +78,7 @@ export const config: VendureConfig = {
     }),
     AdminUiPlugin.init({
       route: 'admin',
-      port: serverPort + 2,
+      port: serverPort,
       adminUiConfig: {
         apiPort: serverPort,
       },
